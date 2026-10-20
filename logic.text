@@ -1,0 +1,84 @@
+I will set up the POP up DIALOG box later, first I will have the form just on top of the table.
+
+----------------------------/ THIS IS LOGIC FOR JAVASCRITP /-----------------------------------
+
+First when user press submit button get all the values from title, author, year by doing like:
+    title = document.querySelector("#<whatEver the ID/class was used>").value; ==> Do same for author and year
+
+=> now for id we do id = crypto.randomUUID(); if you want to check wheather it was generated before, than
+    create a empty array that hold all the ids created by the "crypto" function like:
+    let allIds = [], outside of the click function because it will be empty again every time we click the submit
+    button and we won't be able to run check.
+
+==> now Inside the click function do the following:
+    const generatedID = crypto.randomUUID();
+    const id = (allIds.includes(generatedID)) ? crypto.randomUUID() : generatedID; ==> This is ternery if/else
+        operator, what it does here is checks if the generatedID is already available in allIds, which holds
+        our all previously used IDs. if check returns true crypto.randomUUID(); will generate a new id but if
+        it is not available in our allIds, than use whatever the "generatedID" holds.
+
+==> After that push the id, currently used id to allIds, allIds.push(id) because this id will be used now and
+    we want to hold all the used IDs to check for next one.
+
+==> now pass all the values to addBookToLibrary(), the function, by calling it from inside of the click function
+    with the values we want to pass like: addBookToLibrary(id, title, author, year), inside the click function.
+
+    /------/ (THIS IS THE CONSTRUCTOR FUNCTION) (WHAT IS HAPPENING HERE WILL BE DISCUSSED LATER)/-------/
+    ===> what happens inside of the constructor function:
+    function Book(id, title, author, year) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.year = year
+    }
+    /----------------------/ (END OF CONSTRUCTOR FUNCTION) /-----------------------/
+
+==> now inside of the click function when we get this parameters, we will create a new instance of the
+    constructor function (function Book(){....}) passing the id, title, author and year as arguments like:
+        function addBookToLibrary(id, title, author, year){
+            const book = new Book(id, title, author, year); ==> this will create a book object like book ={
+                                                                                            id : id, 
+                                                                                            title: "title",
+                                                                                            // And so on
+                                                                                        }
+            // now push this book object to array named, myLibray, that is outside of all these functions which holds all the
+                books we have created;
+            
+            ==> After pushing it to the array, we can reset the form like:
+            -> 1st get the form: const formbox = document.querySelector(".formbox);
+            --> Now formbox.reset(); -> this will empty our form's input field for new inputs;
+
+            ==> After reseting the form call render function, (function render(){....}), which will be used to
+                display the books in a table in html file.
+        }
+
+
+==> Now for the render function:
+function render(){
+    ==> First of all in our render function we will empty every thing from table except the table head,
+        we will empty the table body which we can do by following:
+            -> const tableBody = document.querySelector("tbody);
+                tableBody.innerHtml = '';
+            --> This will remove Everything from table's body keeping the header like id, title, author and year
+                safely in theplace.
+    
+    => now that the table row is created we will run for each for all the books inside "myLibray"
+        --> myLibray.forEach(book => {
+            
+            ==> Now we will create an element called "tr" -> in order to add all each element of a book to the 
+                rows, where we have already created the table head in row basis like: ID  title   author  year.
+            -> let row = document.createElement("tr");
+
+            => then add all the table's table rows inside of the row variable like:
+            -> row.innerHtml = `
+            
+                <td>${book.id}<td>
+                // similarly for title, author and year.
+            
+            `
+            => after thats done, we will put our row inside of the tableBody (this will also be done in loop)
+                tableBody.appendChild(row);
+            
+
+        })
+}

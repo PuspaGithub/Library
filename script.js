@@ -1,53 +1,45 @@
-const submit = document.querySelector("#submit");
-const formbox = document.querySelector(".formbox"); 
-const bookIds = []
-
-submit.addEventListener("click", (e)=> {
-    e.preventDefault();
-
-    const bookTitle = document.querySelector("#bookTitle").value;
-    const author = document.querySelector("#bookAuthor").value;
-    const yearPublished = document.querySelector("#yearPublished").value;
-    
-    let uniqueId = crypto.randomUUID();
-    let bookId = bookIds.includes(uniqueId) ? crypto.randomUUID() : uniqueId;
-    bookIds.push(bookId);
-    const id = bookId;
-
-    addBookToLibrary(bookTitle, author, yearPublished, id);
-
-    formbox.reset();
-})
-// <button type="submit" id="submit">Add Book</button>
-
 const myLibrary = [];
 
-function Book(title, author, year, id) {
-  this.id = id;
-  this.title = title;
-  this.author = author;
-  this.year = year;
+// get the submit button
+const submitBtn = document.querySelector("#submit");
+// get the total form box
+const formbox = document.querySelector(".formbox");
+
+submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const id = crypto.randomUUID();
+    const title = document.querySelector("#bookTitle").value;
+    const author = document.querySelector("#bookAuthor").value;
+    const year = document.querySelector("#yearPublished").value;
+
+    // pass all the values to addBookToLibrary
+    addBookToLibrary(id, title, author, year);
+})
+
+function Book(id, title, author, year) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.year = year;
 }
 
-function addBookToLibrary(title, author, year, id) {
-  const book = new Book(title, author, year, id);
+function addBookToLibrary(id, title, author, year) {
+    const book = new Book(id, title, author, year);
 
-  myLibrary.push(book);
+    myLibrary.push(book);
 
-  render(myLibrary);
+    formbox.reset();
 
-//   console.log(myLibrary);
-
-
+    // console.log(myLibrary);
+    render(myLibrary);
 }
 
-function render(bookArray){
-    console.log(bookArray);
-    
+function render(myLibrary){
     const tbody = document.querySelector("tbody");
     tbody.innerHTML = '';
 
-    bookArray.forEach(book => {
+    myLibrary.forEach(book => {
         const row = document.createElement("tr");
 
         row.innerHTML = `
@@ -56,8 +48,8 @@ function render(bookArray){
             <td>${book.author}</td>
             <td>${book.year}</td>
         `
+
         tbody.appendChild(row);
-    })
-    
-    
+    });
+
 }
