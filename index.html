@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <form class="formbox">
+        <!-- Book ID will be added automatically -->
+
+        <!-- Book Title -->
+         <div class="form-group">
+            <label for="bookTitle">Book Tile:</label>
+            <input type="text" id="bookTitle" name="bookTitle" required>
+        </div>
+
+        <!-- Author -->
+        <div class="form-group">
+            <label for="bookTitle">Author: </label>
+            <input type="text" id="bookAuthor" name="bookAuthor" required>
+        </div>
+
+
+        <!-- Year Published -->
+        <div class="form-group">
+            <label for="yearPublished">Year Published:</label>
+            <input type="number" id="yearPublished" min="0" max="2026">
+        </div>
+
+        <button type="submit" id="submit">Add Book</button>
+    </form>
+
+    <section class="book-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Published Date</th>
+                    <th>Pages</th>
+                </tr>
+            </thead>
+            <TBody>
+                
+            </TBody>
+        </table>
+    </section>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+</body>
+</html>
