@@ -82,3 +82,15 @@ function render(){
 
         })
 }
+
+/--------------------------(DELETE LOGIC)---------------------------------/
+--> When a customer presses the Delete button ==> We get the data-set id and with the help of that Id we can
+    filter out the book from myLibray array which contains that particular id.  And run the render function
+    again.
+
+/---------------------------(UPDATE LOGIC)----------------------------------------------/
+--> When the customer presses the update button --> We get the data-set id and with that Id we get the book's
+    title, author and year and we will put these values in the input fields of the form && hide the add book 
+    button and display the update button. when customer edits it and presses the update button ==> first it   
+    goes to constructor function and then we get the new book now with this new book, we keep the
+    original id, and keeping the same id we replace the book with our new book.

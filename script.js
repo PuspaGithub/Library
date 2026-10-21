@@ -63,6 +63,7 @@ const tbody = document.querySelector("tbody")
 const title = document.querySelector("#bookTitle");
 const author = document.querySelector("#bookAuthor");
 const year = document.querySelector("#yearPublished");
+const updateBtn = document.querySelector("#update");
 
 // This is an function to delete the book when I clicked delete
 tbody.addEventListener("click", (e)=> {
@@ -76,20 +77,51 @@ tbody.addEventListener("click", (e)=> {
     }
 
     if(e.target.classList.contains("updateBtn")){
+
         
+        submitBtn.style.display = "none";
+        updateBtn.style.display = "block"
+
         let targetId = e.target.dataset.id;
 
         let book = myLibrary.find(book => book.id === targetId);
+        let bookIndex = myLibrary.findIndex(book => book.id === targetId);
+        console.log([book, bookIndex])
 
         if(book){
             title.value = book.title;
             author.value = book.author;
             year.value = book.year;
-
-            targetId = book.id;
-
-            submitBtn.textContent = "Update";
         }
+
+        update(book, bookIndex, targetId);
     }
 })
+
+function update(book, bookIndex, targetId){
+
+
+    updateBtn.addEventListener("click", (e)=> {
+        e.preventDefault();
+
+        console.log("I am in Update Button");
+
+        const id  = targetId;
+        const title = document.querySelector("#bookTitle").value;
+        const author = document.querySelector("#bookAuthor").value;
+        const year = document.querySelector("#yearPublished").value;
+
+        const book = new Book(id, title, author, year);
+
+        myLibrary[bookIndex] = book;
+
+        render(myLibrary);
+
+        submitBtn.style.display = "block";
+        updateBtn.style.display = "none";
+        formbox.reset();
+    })
+}
+
+
 
