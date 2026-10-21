@@ -1,4 +1,4 @@
-const myLibrary = [];
+let myLibrary = [];
 
 // get the submit button
 const submitBtn = document.querySelector("#submit");
@@ -47,9 +47,49 @@ function render(myLibrary){
             <td>${book.title}</td>
             <td>${book.author}</td>
             <td>${book.year}</td>
+            <td><button class="deleteBtn" data-id ="${book.id}">Delete</button></td>
+            <td><button class="updateBtn" data-id ="${book.id}">Update</button></td>
         `
 
         tbody.appendChild(row);
     });
 
 }
+
+// get table body the actual data of the book, get the whole row;
+const tbody = document.querySelector("tbody")
+
+// get all the inputs
+const title = document.querySelector("#bookTitle");
+const author = document.querySelector("#bookAuthor");
+const year = document.querySelector("#yearPublished");
+
+// This is an function to delete the book when I clicked delete
+tbody.addEventListener("click", (e)=> {
+    if(e.target.classList.contains("deleteBtn")) {
+        // get the id from the target
+        let targetId = e.target.dataset.id;
+        
+        myLibrary = myLibrary.filter(book => book.id !== targetId);
+
+        render(myLibrary);
+    }
+
+    if(e.target.classList.contains("updateBtn")){
+        
+        let targetId = e.target.dataset.id;
+
+        let book = myLibrary.find(book => book.id === targetId);
+
+        if(book){
+            title.value = book.title;
+            author.value = book.author;
+            year.value = book.year;
+
+            targetId = book.id;
+
+            submitBtn.textContent = "Update";
+        }
+    }
+})
+
